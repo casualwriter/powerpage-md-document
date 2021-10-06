@@ -5,7 +5,7 @@ A simple document framework for using markdown as system documentation.
 Compose document is always a boring job for developer. When working on the document of "Powerpage", there are some markdown files composed for github (e.g. README.md).
 Thinking that it will be greated to make use of these markdown files to gernerate a web site for system documentation.
 
-Actually, the program only has one file. i.e. [index.html](index.html). Pure javascript, No dependance.
+Actually, the program only has one file. i.e. [index.html](index.html), in **pure javascript without dependance**.
 
 Just simply put the following file in a folder of web server, and everything is done.
 
@@ -23,13 +23,7 @@ Just simply put the following file in a folder of web server, and everything is 
 
 ### User Guide
 
-Please setup the the following items for your documenation site.
-
-* Page Title  (ie. `<span id=title>{title}</span>`)
-* Start page  (ie. `<body onload="loadMdFile( {file}, {title} )">` )
-* Top Menu Itme (i.e. `<button onclick="loadMdFile( {file}, this.innerText)">{title}</button>)` )
-
-then copy the file with markdown document to web server. that's ALL!
+Below is the default setup for [Powerpage Documentaiton](https://pingshan-tech.com/powerpage/doc/).
 
 ```
 <body onload="loadMdFile('README.md', 'Overview' )">
@@ -54,7 +48,16 @@ then copy the file with markdown document to web server. that's ALL!
 </body>
 ```
 
-More, press [Alt-S] will active a hidden function for developer, which toggles page between normal and raw HTML.
+Please setup the following items for your documentation site.
+
+* Page Title  (ie. `<span id=title>{page-title}</span>`)
+* Start page  (ie. `<body onload="loadMdFile( {start-markdownm-file}, {document-title} )">` )
+* Top Menu Itme (i.e. `<button onclick="loadMdFile( {markdown-file}, this.innerText)">{document-title}</button>)` )
+
+then copy the file with markdown documents to web server. that's ALL!
+
+
+More, a hidden function for developer. Press [Alt-S] will toggles page between normal and raw HTML.
 
 ```
 //=== toggle HTML in right-panel. (this is a hidden function for developer)
