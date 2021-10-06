@@ -2,8 +2,10 @@
 
 A simple document framework for using markdown as system documentation. 
 
-Compose document is always a boring job for developer. When working on the document of "Powerpage", there are some markdown files composed for github (e.g. README.md).
-Thinking that it will be greated to make use of these markdown files to gernerate a web site for system documentation.
+Documentation is always a boring job for developer. When working on the document of ["Powerpage"](https://github.com/casualwriter/powerpage), 
+there are some markdown files composed for github (e.g. README.md).
+Thinking that it will be greated to make use of these markdown files as system documentation, 
+so write this program for [Powerpage Documentation](https://pingshan-tech.com/powerpage/doc/)   
 
 Actually, the program only has one file. i.e. [index.html](index.html), in **pure javascript without dependance**.
 
@@ -15,7 +17,6 @@ Just simply put the following file in a folder of web server, and everything is 
 4. development.md
 5. pp-document.md
 
-**this is it!** [Powerpage Documentation](https://pingshan-tech.com/powerpage/doc/)
 
 ### Screen preview
 
@@ -51,16 +52,16 @@ Below is the default setup for [Powerpage Documentaiton](https://pingshan-tech.c
 Please setup the following items for your documentation site.
 
 * Page Title  (ie. `<span id=title>{page-title}</span>`)
-* Menu Itme  (i.e. `<button onclick="location = '?file={markdown-file}&title='+this.innerText">{document-title}</button>)` )
+* Menu Items  (i.e. `<button onclick="location = '?file={markdown-file}&title='+this.innerText">{document-title}</button>)` )
 
-then copy the file with markdown documents to web server. that's ALL!
+then copy [index.html](index.html) with markdown documents to web server. that's ALL!
 
 ps: a hidden function for developer. Press [Alt-S] will toggles page between normal and raw HTML.
 
  
 ### Simple Markdown Parser
 
-The program include a simple markdown parse in pure javascaript. no dependance, reuseable.
+The program include a simple markdown parse in pure javascaript. no dependance, reusable.
 
 ```
 //=== simple markdown parser
