@@ -26,17 +26,17 @@ Just simply put the following file in a folder of web server, and everything is 
 Below is the default setup for [Powerpage Documentaiton](https://pingshan-tech.com/powerpage/doc/).
 
 ```
-<body onload="loadMdFile('README.md', 'Overview' )">
+<body>
 <div id=header>
-  <span id=title><mark>Powerpage <small>(documentation)</small></mark></span>
+  <span id=title>Powerpage <small>(documentation)</small></span>
   <span id=menu style="float:right; padding:12px">
-    <button onclick="loadMdFile('README.md',this.innerText)">Home</button>
-    <button onclick="loadMdFile('interface.md',this.innerText)">API</button>
-    <button onclick="loadMdFile('development.md',this.innerText)">Development</button>
-    <button onclick="loadMdFile('pp-document.md')">Document.md</button>
-    <button onclick="loadMdFile('pp-markdown.md')" disabled>Markdown-Editor</button>
-    <button onclick="loadMdFile('pp-web-crawler.md')" disabled>Web-Crawler</button>
-    <button onclick="loadMdFile('pp-db-report.md')" disabled>DB-Reports</button> 
+    <button onclick="location = '?file=README.md&title=' + this.innerText">Home</button>
+    <button onclick="location = '?file=interface.md&title=' + this.innerText">API</button>
+    <button onclick="location = '?file=development.md&title=' + this.innerText">Development</button>
+    <button onclick="location = '?file=pp-document.md&title=' + this.innerText">Document.md</button>
+    <button onclick="location = '?file=pp-markdown.md&title=' + this.innerText" disabled>Markdown-Editor</button>
+    <button onclick="location = '?file=pp-web-crawler.md&title=' + this.innerText" disabled>Web-Crawler</button>
+    <button onclick="location = '?file=pp-db-report.md&title=' + this.innerText" disabled>DB-Reports</button> 
     <button onclick="window.print()">Print</button> 
     <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
   </span>
@@ -51,26 +51,13 @@ Below is the default setup for [Powerpage Documentaiton](https://pingshan-tech.c
 Please setup the following items for your documentation site.
 
 * Page Title  (ie. `<span id=title>{page-title}</span>`)
-* Start page  (ie. `<body onload="loadMdFile( {start-markdownm-file}, {document-title} )">` )
-* Top Menu Itme (i.e. `<button onclick="loadMdFile( {markdown-file}, this.innerText)">{document-title}</button>)` )
+* Menu Itme  (i.e. `<button onclick="location = '?file={markdown-file}&title='+this.innerText">{document-title}</button>)` )
 
 then copy the file with markdown documents to web server. that's ALL!
 
+ps: a hidden function for developer. Press [Alt-S] will toggles page between normal and raw HTML.
 
-More, a hidden function for developer. Press [Alt-S] will toggles page between normal and raw HTML.
-
-```
-//=== toggle HTML in right-panel. (this is a hidden function for developer)
-function toggleHTML() {
-  var html = document.getElementById('right-panel').innerHTML
-  if (html.substr(0,5)=='<xmp>') {
-     document.getElementById('right-panel').innerHTML = html.substr(5, html.length-11)
-  } else {
-     document.getElementById('right-panel').innerHTML = '<xmp>' + html + '</xmp>' 
-  }  
-}
-```
-
+ 
 ### Simple Markdown Parser
 
 The program include a simple markdown parse in pure javascaript. no dependance, reuseable.
@@ -163,5 +150,6 @@ function simpleTOC( title, srcDiv, toDiv ) {
  
 ### Modificaiton History
   
-* 2021/10/06, v0.50, initial verison, minor revision from pp-document.html
+* 2021/10/05, v0.48, initial verison, minor revision from pp-document.html
+* 2021/10/06, v0.50, cater url parameter, get filename from url. 
 
