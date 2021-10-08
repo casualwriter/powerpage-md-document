@@ -27,17 +27,17 @@ Just simply put the following file in a folder of web server, and everything is 
 Below is the default setup for [Powerpage Documentaiton](https://pingshan-tech.com/powerpage/doc/).
 
 ```
-<body>
+<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
 <div id=header>
   <span id=title>Powerpage <small>(documentation)</small></span>
   <span id=menu style="float:right; padding:12px">
-    <button onclick="location = '?file=README.md&title=' + this.innerText">Home</button>
-    <button onclick="location = '?file=interface.md&title=' + this.innerText">API</button>
-    <button onclick="location = '?file=development.md&title=' + this.innerText">Development</button>
-    <button onclick="location = '?file=pp-document.md&title=' + this.innerText">Document.md</button>
-    <button onclick="location = '?file=pp-markdown.md&title=' + this.innerText" disabled>Markdown-Editor</button>
-    <button onclick="location = '?file=pp-web-crawler.md&title=' + this.innerText" disabled>Web-Crawler</button>
-    <button onclick="location = '?file=pp-db-report.md&title=' + this.innerText" disabled>DB-Reports</button> 
+    <button onclick="loadMdFile( 'README.md', this.innerText )">Home</button>
+    <button onclick="loadMdFile( 'interface.md', this.innerText )">API</button>
+    <button onclick="loadMdFile( 'development.md', this.innerText )">Development</button>
+    <button onclick="loadMdFile( 'pp-document.md', this.innerText )">Document.md</button>
+    <button onclick="loadMdFile( 'pp-md-editor', this.innerText )" disabled>Markdown-Editor</button>
+    <button onclick="loadMdFile( 'pp-web-crawler.md', this.innerText )" disabled>Web-Crawler</button>
+    <button onclick="loadMdFile( 'pp-db-report.md', this.innerText )" disabled>DB-Reports</button> 
     <button onclick="window.print()">Print</button> 
     <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
   </span>
@@ -51,8 +51,9 @@ Below is the default setup for [Powerpage Documentaiton](https://pingshan-tech.c
 
 Please setup the following items for your documentation site.
 
+* Start Flie  (i.e. <body onload="loadMdFile( location.href.split('?file=')[1]||`'README.md'`, '<b>Contents</b>' )"> )
 * Page Title  (ie. `<span id=title>{page-title}</span>`)
-* Menu Items  (i.e. `<button onclick="location = '?file={markdown-file}&title='+this.innerText">{document-title}</button>)` )
+* Menu Items  (i.e. `<button onclick="loadMdFile( '{markdown-file}', this.innerText )">{document-title}</button>)` )
 
 then copy [index.html](index.html) with markdown documents to web server. that's ALL!
 
@@ -122,9 +123,9 @@ function simpleMarkdown(mdText) {
 }
 ```
 
-### Simple TOC (table of content)
+### Simple TOC with scrollspy
 
-The program also has a function for simple TOC (table-of-content) in pure javascaript. no dependance, reuseable.
+The program also has a function for simple TOC (table-of-content) with scrollspy feature in pure javascaript.
 
 ```
 //=== simpleTOC: show Table of Content
@@ -147,10 +148,22 @@ function simpleTOC( title, srcDiv, toDiv ) {
 
   document.getElementById(toDiv||'left-panel').innerHTML = html   
 }
+
+//=== scrollspy feature
+document.getElementById('right-panel').onscroll = function () {
+  var list = document.getElementById('left-panel').querySelectorAll('a')
+  var divScroll = document.getElementById('right-panel').scrollTop - 10
+  var divHeight = document.getElementById('right-panel').offsetHeight
+  for (var i=0; i<list.length; i++) {
+    var pos = document.getElementById(list[i].innerText).offsetTop - divScroll  
+    list[i].style['font-weight'] = ( pos>0 && pos<divHeight ? 600 : 400 )
+  }
+}
 ```
  
 ### Modificaiton History
   
 * 2021/10/05, v0.48, initial verison, minor revision from pp-document.html
-* 2021/10/06, v0.50, cater url parameter, get filename from url. 
+* 2021/10/06, v0.50, cater url parameter, get filename from url.
+* 2021/10/08, v0.60, add scrollspy feature. 
 
