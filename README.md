@@ -165,5 +165,6 @@ document.getElementById('right-panel').onscroll = function () {
   
 * 2021/10/05, v0.48, initial verison, minor revision from pp-document.html
 * 2021/10/06, v0.50, cater url parameter, get filename from url.
-* 2021/10/08, v0.60, add scrollspy feature. 
+* 2021/10/08, v0.60, add scrollspy feature.
+* 2021/10/12, v0.64, refine of simple markdown parser 
 
