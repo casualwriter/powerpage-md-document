@@ -20,7 +20,7 @@ Just simply put the following file in a folder of web server, and everything is 
 
 ### Screen preview
 
-<img alt="screen preview" src="pp-document.gif" style="width:85%; padding:30px">
+<img alt="screen preview" src="pp-md-document.gif" style="width:85%; padding:30px">
 
 ### User Guide
 
