@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <title>PowerPage</title>
+
 <style>
 html { box-sizing:border-box } *,*:before, *:after {box-sizing:inherit}
 body { font-family:Verdana,sans-serif; font-size:14px; line-height:1.5; margin:0; }
@@ -10,6 +11,7 @@ h3 { font-size:24px; padding:2px; color:darkblue; }
 h4 { font-size:20px; padding:2px; }
 h5 { font-size:16px; padding:2px; }
 h2 { font-size:30px; padding:8px; color:#695874; background:#f0f0f0; }
+
 ins { color:#890604 } 
 rem { color:#198964 }
 blockquote { font-family:sans-serif,calibri; background-color:#f6f6f6; border-left:5px solid grey; padding-left:8px  }
@@ -19,27 +21,33 @@ a 	 { background:transparent; text-decoration:none; color:navy } a:active, a:hov
 table { margin:12px; border-collapse: collapse; }
 th    { border:1px solid grey; background:lightgrey; padding:6px; }
 td    { border:1px solid grey;  padding:6px; }
+
 #header { background-color:#695874; color:white; width:100%; height:50px; }
 #title 	{ float:left; font-size:18px; font-weight:700; padding:8px }
-#menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:#695874; }
+#menu button, #menu a  { font-family:Verdana,Arial; border:none; padding:4px 8px; color:inherit; background:inherit; }
 #menu button:hover, #menu a:hover { color:#000; background-color:#ccc }
 #menu button:disabled {cursor:not-allowed; opacity:0.5}: disabled *{pointer-events:none}
-#toc 		{ list-style-type:none; padding:0; margin:0 }
-#toc li	{ padding:4px 8px; border-bottom:1px solid #eee }
-#left-panel 	{ position:absolute; left:0; bottom:0; width:400px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
+#toc          { list-style-type:none; padding:0; margin:0 }
+#toc li	      { padding:4px 8px; border-bottom:1px solid #eee }
+#toc li:hover { background:lightgreen!important }
+#left-panel   { position:absolute; left:0; bottom:0; width:400px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
 #right-panel 	{ position:absolute; right:0; bottom:0; left:400px; top:48px; border:1px solid grey; overflow:auto; padding:4px 8px }
+
 @media print{
-  @page { size: A4 landscape; }
   #header, #left-panel { display:none!important }
   #right-panel { position:relative; width:100%; left:0px; top:0px; border:none; height:auto; overflow:hidden }
 }
 </style>
 
 <body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
-<div id=header>
+
+<div id=header style="background-color:#695874;">
+
   <span id=title>Powerpage <small>(documentation)</small></span>
+  
   <span id=menu style="float:right; padding:12px">
-    <button onclick="loadMdFile( 'README.md', this.innerText )">Home</button>
+    <a href="../index.html">Home</a>
+    <button onclick="loadMdFile( 'README.md', this.innerText )">README</button>
     <button onclick="loadMdFile( 'interface.md', this.innerText )">API</button>
     <button onclick="loadMdFile( 'development.md', this.innerText )">Development</button>
     <button onclick="loadMdFile( 'pp-md-document.md', this.innerText )">Document.md</button>
@@ -48,24 +56,30 @@ td    { border:1px solid grey;  padding:6px; }
     <button onclick="window.print()">Print</button> 
     <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
   </span>
+  
 </div>
+
 <div id=content>
   <div id="left-panel"></div>
   <div id="right-panel"></div>
 </div>
+
 </body>
 
 <script>
-//############################################################################
-// Program: Show document by markdown (for powerpage documentation)  
-// Author: CK Hung
-// Github: https://github.com/casualwriter/powerpage-document
-// Last update on 2021/10/11, v0.64
-//############################################################################
+//###########################################################################################
+// Program: Show document by markdown (for powerpage documentation, may run directly via CDN)  
+// Github: https://github.com/casualwriter/powerpage-md-document
+//
+// This program may run directly via CDN service
+//
+//   github-page: https://casualwriter.github.io/powerpage
+//   RawGit:      https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html
+//   gitHack:     https://raw.githack.com/casualwriter/powerpage/main/source/doc/index.html
+//###########################################################################################
 
 //=== toggle HTML in right-panel. (this is a hidden function for developer)
 function toggleHTML() {
-
   var html = document.getElementById('right-panel').innerHTML
   
   if (html.substr(0,5)=='<xmp>') {
@@ -73,30 +87,37 @@ function toggleHTML() {
   } else {
      document.getElementById('right-panel').innerHTML = '<xmp>' + html.replace(/xmp\>/g,'xmp&gt;') + '</xmp>' 
   }
-    
 }
 
 //=== load and parser markdown file. 
 function loadMdFile( fname, title ) {
-
   var xmlhttp = new XMLHttpRequest();
   
   xmlhttp.onload = function (e) {
     document.getElementById('right-panel').innerHTML =  simpleMarkdown(this.responseText) + '<br>'
-    simpleTOC( title||fname )
+    simpleTOC( 'right-panel', 'left-panel', title||fname, 'color:red' )
     if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
   }
   
   xmlhttp.open("GET", fname , true)
   xmlhttp.send();
-  
 }
 
-//=== simpleTOC: show Table of Content (updated on 2021/10/09)
-function simpleTOC( title, srcDiv, toDiv ) {
+//######################################################################################
+// Program: Markdown parser for powerpage documentation 
+// Author: casualwriter
+// Github: https://github.com/casualwriter/powerpage-md-document
+// Last updated on 2021/10/21, v0.66, minor fix on markdown parser, TOC
+//######################################################################################
+// simpleTOC( srcElementId, tocElementId, title, scrollspy )
+// simpleMarkdown ( mdText )
+//######################################################################################
+
+//=== simpleTOC: show Table of Content (updated on 2021/10/21)
+function simpleTOC( srcDiv, tocDiv, title, scrollSpy  ) {
 
   // retrieve he,h3[,h4,h5] DOM elements
-  var toc = document.getElementById(srcDiv||'right-panel').querySelectorAll('h2,h3')
+  var toc = document.getElementById(srcDiv).querySelectorAll('h2,h3')
   var html = '<h4> ' + (title||'Content') + '</h4><ul id="toc">';
   
   for (var i=0; i<toc.length; i++ ) {
@@ -106,42 +127,43 @@ function simpleTOC( title, srcDiv, toDiv ) {
     
     // generate indented list by h2,h3,h4  
     if (toc[i].nodeName === "H2" && toc[i].id.substr(0,6)!=="no-toc") {
-      html += '<li style="background:#f6f6f6"><a href="#' + toc[i].id + '">' + toc[i].innerText + '</a></li>';
+      html += '<li style="background:#f6f6f6" title="#' + toc[i].id + '" onclick="location=this.title">' + toc[i].innerText + '</a></li>';
     } else if (toc[i].nodeName === "H3" && toc[i].id.substr(0,6)!=="no-toc") {
-      html += '<li style="margin-left:12px"><a href="#' + toc[i].id + '">' + toc[i].innerText + '</a></li>';
+      html += '<li style="margin-left:12px" title="#' + toc[i].id + '" onclick="location=this.title">' + toc[i].innerText + '</a></li>';
     } else if (toc[i].nodeName === "H4" && toc[i].id.substr(0,6)!=="no-toc") {
-      html += '<li style="margin-left:24px"><a href="#' + toc[i].id + '">' + toc[i].innerText + '</a></li>';
+      html += '<li style="margin-left:24px" title="#' + toc[i].id + '" onclick="location=this.title">' + toc[i].innerText + '</a></li>';
     }
     
   }
   
-  document.getElementById(toDiv||'left-panel').innerHTML = html   
-}
-
-//=== scrollspy feature  (updated on 2021/10/09)
-document.getElementById('right-panel').onscroll = function () {
-
-  // get links and get viewport position   
-  var list = document.getElementById('left-panel').querySelectorAll('a')
-  var divScroll = document.getElementById('right-panel').scrollTop - 10
-  var divHeight = document.getElementById('right-panel').offsetHeight
+  document.getElementById(tocDiv||'toc-panel').innerHTML = html 
   
-  // loop for each header element, highlight if within viewport
-  for (var i=0; i<list.length; i++) {
-    var div = document.getElementById( list[i].href.split('#')[1] )
-    var pos = (div? div.offsetTop - divScroll : 0 )  // in case of not found sometimes.
-    list[i].style['font-weight'] = ( pos>0 && pos<divHeight ? 600 : 400 )
+  //=== scrollspy := 'none | bold | style'  (updated on 2021/10/22)
+  if ( (scrollSpy||'bold') !== 'none' ) {
+    document.getElementById(srcDiv).onscroll = function () {
+      // get links and get viewport position   
+      var list = document.getElementById(tocDiv||'toc-panel').querySelectorAll('li')
+      var divScroll = document.getElementById(srcDiv).scrollTop - 10
+      var divHeight = document.getElementById(srcDiv).offsetHeight
+      
+      // loop for each header element, highlight if within viewport
+      for (var i=0; i<list.length; i++) {
+        var div = document.getElementById( list[i].title.substr(1) )
+        var pos = (div? div.offsetTop - divScroll : 0 )  
+        list[i].style['font-weight'] = ( pos>0 && pos<divHeight ? 600 : 400 )
+      }
+    }
   }
   
 }
 
-//=== simple markdown parser (updated on 2021/10/19, v0.65, minor fix)
+//=== simple markdown parser (updated on 2021/10/21, v0.67, minor fix)
 function simpleMarkdown(mdText) {
 
-  // function for REGEXP to show html tag. ie. <TAG> => &lt;TAG*gt;  
+  // function for REGEXP to convert html tag. ie. <TAG> => &lt;TAG*gt;  
   var formatTag = function (html) { return html.replace(/</g,'&lt;').replace(/\>/g,'&gt;'); }
   
-  // format code-block, highlight remarks/keyword 
+  // function for REGEXP to format code-block, highlight remarks/keywords 
   var formatCode = function(m,p1,p2){
     p2 = p2.replace(/</g,'&lt;').replace(/\>/g,'&gt;').replace(/\/\/(.*)$/gm,'<rem>//$1</rem>')   
     p2 = p2.replace(/(function |return |var |let |const |else |if |for |while |continue |break |case |switch )/gim,'<b>$1</b>')
@@ -162,39 +184,45 @@ function simpleMarkdown(mdText) {
       // horizontal rule => <hr> 
       mdstr = mdstr.replace(/^-{3,}|^\_{3,}|^\*{3,}$/gm, '<hr/>')
       
-      // md inline code-block => <code>$1</code>    
+      // inline code-block: `code-block` => <code>code-block</code>    
       mdstr = mdstr.replace(/``(.*?)``/gm, function(m,p){ return '<code>' + formatTag(p).replace(/`/g,'&#96;') + '</code>'} ) 
       mdstr = mdstr.replace(/`(.*?)`/gm, '<code>$1</code>' )
       
-      // blockquote => <blockquote>
+      // blockquote, max 2 levels => <blockquote>{text}</blockquote>
       mdstr = mdstr.replace(/^\>\> (.*$)/gm, '<blockquote><blockquote>$1</blockquote></blockquote>')
       mdstr = mdstr.replace(/^\> (.*$)/gm, '<blockquote>$1</blockquote>')
+      mdstr = mdstr.replace(/<\/blockquote\>\n<blockquote\>/g, '\n' )
       mdstr = mdstr.replace(/<\/blockquote\>\n<blockquote\>/g, '\n<br>' )
-      mdstr = mdstr.replace(/<\/blockquote\>\n<br\><blockquote\>/g, '\n<br>' )
                 
-      // image syntax => <img alt="title" src="url" [opts] />          
+      // image syntax: ![title](url) => <img alt="title" src="url" />          
       mdstr = mdstr.replace(/!\[(.*?)\]\((.*?) "(.*?)"\)/gm, '<img alt="$1" src="$2" $3 />')
-      mdstr = mdstr.replace(/!\[(.*?)\]\((.*?)\)/gm, '<img alt="$1" src="$2" />')
+      mdstr = mdstr.replace(/!\[(.*?)\]\((.*?)\)/gm, '<img alt="$1" src="$2" width="90%" />')
                 
-      // links syntax => <a href="url" title="title">text</a>          
+      // links syntax: [title](url) => <a href="url" title="title">text</a>          
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?) "new"\)/gm, '<a href="$2" target=_new>$1</a>')
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?) "(.*?)"\)/gm, '<a href="$2" title="$3">$1</a>')
-      mdstr = mdstr.replace(/<http(.*?)\>/gm, '<a href="http$1">http$1</a>')
+      mdstr = mdstr.replace(/([<\s])(http[s]\:\/\/.*?)([\s\>])/gm, '$1<a href="$2">$2</a>$3')
       mdstr = mdstr.replace(/\[(.*?)\]\(\)/gm, '<a href="$1">$1</a>')
       mdstr = mdstr.replace(/\[(.*?)\]\((.*?)\)/gm, '<a href="$2">$1</a>')
                 
-      // unordered list, and ordered list  => <ul><li>..</li></ul>, <ol><li>..</li></ol>
-      mdstr = mdstr.replace(/^[\*+-][ .](.*)/gm, '<ul><li>$1</li></ul>' ).replace(/<\/ul\>\n<ul\>/g, '\n' )
-      mdstr = mdstr.replace(/^\d[ .](.*)/gm, '<ol><li>$1</li></ol>' ).replace(/<\/ol\>\n<ol\>/g, '\n' )
+      // unordered/ordered list, max 2 levels  => <ul><li>..</li></ul>, <ol><li>..</li></ol>
+      mdstr = mdstr.replace(/^[\*+-][ .](.*)/gm, '<ul><li>$1</li></ul>' )
+      mdstr = mdstr.replace(/^\d[ .](.*)/gm, '<ol><li>$1</li></ol>' )
+      mdstr = mdstr.replace(/^\s{2,6}[\*+-][ .](.*)/gm, '<ul><ul><li>$1</li></ul></ul>' )
+      mdstr = mdstr.replace(/^\s{2,6}\d[ .](.*)/gm, '<ul><ol><li>$1</li></ol></ul>' )
+      mdstr = mdstr.replace(/<\/[ou]l\>\n<[ou]l\>/g, '\n' )
+      mdstr = mdstr.replace(/<\/[ou]l\>\n<[ou]l\>/g, '\n' )
                 
       // text decoration: bold, italic, underline, strikethrough, highlight                
-      mdstr = mdstr.replace(/\*\*\*([\w\d].*?)\*\*\*/gm, '<b><em>$1</em></b>')
-      mdstr = mdstr.replace(/\*\*([\w\d].*?)\*\*/gm, '<b>$1</b>')
-      mdstr = mdstr.replace(/\*([\w\d].*?)\*/gm, '<em>$1</em>')
-      mdstr = mdstr.replace(/___([\w\d].*?)___/gm, '<b><em>$1</em></b>')
-      mdstr = mdstr.replace(/__([\w\d].*?)__/gm, '<u>$1</u>')
-      mdstr = mdstr.replace(/~~([\w\d].*?)~~/gm, '<del>$1</del>')
-      mdstr = mdstr.replace(/\^\^([\w\d].*?)\^\^/gm, '<ins>$1</ins>')
+      mdstr = mdstr.replace(/\*\*\*(\w.*?[^\\])\*\*\*/gm, '<b><em>$1</em></b>')
+      mdstr = mdstr.replace(/\*\*(\w.*?[^\\])\*\*/gm, '<b>$1</b>')
+      mdstr = mdstr.replace(/\*(\w.*?[^\\])\*/gm, '<em>$1</em>')
+      mdstr = mdstr.replace(/___(\w.*?[^\\])___/gm, '<b><em>$1</em></b>')
+      mdstr = mdstr.replace(/__(\w.*?[^\\])__/gm, '<u>$1</u>')
+      // mdstr = mdstr.replace(/_(\w.*?[^\\])_/gm, '<u>$1</u>')  // NOT support!! 
+      mdstr = mdstr.replace(/~~(\w.*?)~~/gm, '<del>$1</del>')
+      mdstr = mdstr.replace(/\^\^(\w.*?)\^\^/gm, '<ins>$1</ins>')
+      mdstr = mdstr.replace(/\{\{(\w.*?)\}\}/gm, '<mark>$1</mark>')
                 
       // table syntax
       mdstr = mdstr.replace(/\n\|([\s\S]*)\|\s*\n\s*\n/g, function (m,p) {
@@ -207,8 +235,8 @@ function simpleMarkdown(mdText) {
       mdstr = mdstr.replace(/  \n/g, '\n<br/>').replace(/\n\s*\n/g, '\n<p>\n')
       
       // indent as code-block          
-      mdstr = mdstr.replace(/^ {4,10}(.*)/gm, function(m,p){ return '<pre><code>' + formatTag(p) + '</code></pre>'} )
-      mdstr = mdstr.replace(/^\t(.*)/gm, function(m,p){ return '<pre><code>' + formatTag(p) + '</code></pre>'} )
+      mdstr = mdstr.replace(/^ {4,10}(.*)/gm, function(m,p) { return '<pre><code>' + formatTag(p) + '</code></pre>'} )
+      mdstr = mdstr.replace(/^\t(.*)/gm, function(m,p) { return '<pre><code>' + formatTag(p) + '</code></pre>'} )
       mdstr = mdstr.replace(/<\/code\><\/pre\>\n<pre\><code\>/g, '\n' )
 
       // Escaping Characters                
