@@ -64,7 +64,7 @@ ps: a hidden function for developer. Press [Alt-S] will toggles page between nor
 
 Program includes a simple markdown parser in vanilla javascript. Source can be found at [index.html](source/index.html)
 
-Document of ``supported markdown syntax``` can be found at https://casualwriter.github.io/powerpage/?file=pp-md-document.md#markdown-syntax
+Document of **supported markdown syntax** can be found at https://casualwriter.github.io/powerpage/?file=pp-md-document.md#markdown-syntax
 
 
  
@@ -73,5 +73,6 @@ Document of ``supported markdown syntax``` can be found at https://casualwriter.
 * 2021/10/05, v0.48, initial verison, minor revision from pp-document.html
 * 2021/10/06, v0.50, cater url parameter, get filename from url.
 * 2021/10/08, v0.60, add scrollspy feature.
-* 2021/10/12, v0.64, refine of simple markdown parser 
+* 2021/10/12, v0.64, refine of simple markdown parser
+* 2021/10/21, v0.67, minor fix on md parser and TOC 
 
