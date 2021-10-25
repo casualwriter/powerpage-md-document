@@ -3,6 +3,8 @@
 [**PowerPage**](https://github.com/casualwriter/powerpage) is a lightweight web browser with DB capability 
 and windows accessibility, for rapid development of javascript/html/css application.
 
+ <img alt="powerpage screen preview" src="powerpage.gif" style="width:85%; padding:30px">
+
 Powerpage will connect to database, load startup page using Microsoft web-browser control (**equivalent to IE11**), 
 and communicate with html/js page by ``pb:// or ps://`` protocol to provide below features
 
@@ -29,6 +31,8 @@ I try to make "Powerpage" solution for this purpose.
 
 ### Features
 
+Powerpage is a ready-make Electron-like solution. No install, no compile, no packing. Just open editor to start coding.
+
 * Portable solution. No installation
 * Single execute file. No deployment.
 * No dependance, pure js/html/css
@@ -38,11 +42,6 @@ I try to make "Powerpage" solution for this purpose.
 * Work with Powerbuilder (e.g. call powerbuilder window/function/datawindow)
 
 ps: due to the limitation of Microsoft web-browser control, Powerpage web browser is **equivalent to IE11 (not chrome)**!
-
-
-### Screen Preview
-
- <img alt="powerpage screen preview" src="powerpage.gif" style="width:85%; padding:30px">
 
 
 ### Run Powerpage
@@ -65,7 +64,6 @@ Powerpage is a single executable program. No installation is needed, just downlo
 * ``pp-md-editor.html`` is pp-application of "Powerpage Markdown Editor"
 * ``pp-web-crawler.html`` is pp-application of "Powerpage Web Crawler"
 * ``pp-db-report.html`` is pp-application of "Powerpage DB Reports"
-* ``pp-md-document.html`` is pp-application of "Powerpage Document Frawework"
 
 
 ### How PowerPage work?
@@ -96,12 +94,13 @@ For more details, please refer to [API documentation](interface.md)
 Beside running javascript applications, Powerpage has wide usage by using commandline parameters.
 
 ~~~
-powerpage.exe /ini={ini-file} /url={start-url}  /fullscreen /print /silent
+powerpage.exe /ini={ini-file} /url={start-url}  /script={script-file} /fullscreen /print /silent
               /save={save-html} /pdf={output-pdf-file} /select={selector} /delay={1000}
 ~~~
 
 * `/ini={ini-file}` specifies ini setting file. Aplication could be changed by change the ini file.
-* `/url={start-url}` is used to specify startup link. Aplication could be changed by change startup link. 
+* `/url={start-url}` is used to specify startup link. Aplication could be changed by change startup link.
+* `/script={script-file}` will specify user-defined javascript instead of `powerpage.js`. useful for js injection. 
 * `/fullscreen` or `/kiosk` will run in fullscreen mode, useful for kiosk, or display board.
 * `/silent` will run in silent mode (i.e. suppress js error message)
 * `/print`` will load startup url, print and close program.
@@ -118,6 +117,7 @@ powerpage.exe /ini={ini-file} /url={start-url}  /fullscreen /print /silent
 * ``powerpage.exe /url=pp-web-crawler.html`` run "Powerpage Web Crawler"
 * ``powerpage.exe /url=pp-kanban.html /fullscreen`` run Kanban display board in fullscreen mode
 * ``powerpage.exe /url=pp-md-document.html`` open "Powerpage Documents"
+* ``powerpage.exe /url=facebook.com`` /script=myfacebook.js`` inject js script for facebook.com
 
 **print page or save to html/pdf**
 * ``powerpage.exe /url=http://haodoo.net/ /print`` print page of haodoo.net

@@ -12,12 +12,16 @@ For example,
 * run sql to get data. call ``javascript:pb.db.query(sql,callback)``
 * execute sql to update db,call ``javascript:pb.db.execute(sql,callback)``
 
+-------------------------------------------------------------------
 ## Intreface / API
 
-Powerpage provides "pb protocol command" to talk to html pages. When html page loaded, javascript object ``pb`` is provided as interface service provider.
+Powerpage provides "pb protocol command" to talk to html pages. 
+When html page loaded, javascript object ``pb`` is provided as interface service provider.
 
 for details, please refer to [interface  guide](interface.md).
 
+
+-------------------------------------------------------------------
 ## Start page
 
 Start page can be defined by commandline, or ini. Powerpage load the start html by the following sequence
@@ -32,10 +36,55 @@ start=your-start-page.html
 
 3. if not defined in ini file, by default, powerpage load index.html if found or load powerpage.html if found. 
 
-## Commandline Options
+-------------------------------------------------------------------
+## Command Line
 
-powerpage.exe {url} | {ini}
+Beside running javascript applications, Powerpage has wide usage by using commandline parameters.
 
+~~~
+powerpage.exe /ini={ini-file} /url={start-url}  /script={script-file} /fullscreen /print /silent
+              /save={save-html} /pdf={output-pdf-file} /select={selector} /delay={1000}
+~~~
+
+* `/ini={ini-file}` specifies ini setting file. Aplication could be changed by change the ini file.
+* `/url={start-url}` is used to specify startup link. Aplication could be changed by change startup link.
+* `/script={script-file}` will specify user-defined javascript instead of `powerpage.js`. useful for js injection. 
+* `/fullscreen` or `/kiosk` will run in fullscreen mode, useful for kiosk, or display board.
+* `/silent` will run in silent mode (i.e. suppress js error message)
+* `/print`` will load startup url, print and close program.
+* `/save={save-html}` will load startup url, save to html file, and close program.  Useful for web-crawler
+* `/pdf={output-pdf-file}` will load startup url, generate PDF file, and close program. useful for PDF generation.
+* `/delay={1000}` specifies delay time (by milliseconds) for print/save/pdf options
+* `/select={css-selector}` is applied for **print/save** to select part of html elements.  Useful for web-crawler
+
+### Samples of using command-line
+
+**General Usage**
+* ``powerpage.exe /ini=pp-md-editor.ini`` run "Powerpage Markdown Editor" with its config ini
+* ``powerpage.exe /url=pp-md-editor.html`` run "Powerpage Markdown Editor"
+* ``powerpage.exe /url=pp-web-crawler.html`` run "Powerpage Web Crawler"
+* ``powerpage.exe /url=pp-kanban.html /fullscreen`` run Kanban display board in fullscreen mode
+* ``powerpage.exe /url=pp-md-document.html`` open "Powerpage Documents"
+* ``powerpage.exe /url=facebook.com`` /script=myfacebook.js`` inject js script for facebook.com
+
+**print page or save to html/pdf**
+* ``powerpage.exe /url=http://haodoo.net/ /print`` print page of haodoo.net
+* ``powerpage.exe /url=http://haodoo.net/ /pdf=haodoo.pdf`` save the page of haodoo.net to PDF file
+* ``powerpage.exe /url=http://haodoo.net/ /save=haodoo.html`` save page "haodoo.net" to haodoo.html
+
+**save web content to file (whole page or select by css-selecotr)**
+* ``powerpage.exe /url=https://pingshan-tech.com/powerpage/doc /save=README.html`` save powerpage README (whole page)
+* ``powerpage.exe /url=https://pingshan-tech.com/powerpage/doc /save=README.html /select=#content`` save powerpage README (#content:outerHTML)
+* ``powerpage.exe /url=https://pingshan-tech.com/powerpage/doc /save=README.html /select=@#content`` save powerpage README (#content:innerText)
+* ``powerpage.exe /url=https://pingshan-tech.com/powerpage/doc /save=README.html /select=#right-panel`` save powerpage README (#right-panel)
+
+**save github content to html/pdf (select==.markdown-body)**
+* ``powerpage /url=https://github.com/casualwriter/powerpage /save=README.html /select=.markdown-body`` to save README from github (has error msg)
+* ``powerpage /url=https://github.com/casualwriter/powerpage /save=README.html /select=.markdown-body /silent`` to save README from github (silent mode)
+* ``powerpage /url=https://github.com/casualwriter/powerpage /pdf=README.pdf /select=.markdown-body /silent`` to save in PDF format
+
+  
+-------------------------------------------------------------------
 ## INI Setting
 
 The following setting can be customized for your application.
@@ -71,16 +120,28 @@ width = window-width
 height= window-height
 ~~~
 
+-------------------------------------------------------------------
+## Mini Buttons
+
+* [A] - About dialog
+* [B] - goback()
+* [C] - Console
+* [E] - Edit
+* [R] - Reload page
+* [W] - Openin web browser
+
+
+-------------------------------------------------------------------
 ## Samples
 
 Several sample applications are provided to demonstrated the powerpage application:
 
-* [Markdown editor](https://github.com/casualwriter/powerpage-md)
-* Database Schema (Oracle)
+* [Markdown editor](https://github.com/casualwriter/powerpage-md-editor)
+* [Web Crawler](https://github.com/casualwriter/powerpage-web-crawler)
 * Database Browser
+* kanBan
 * Display Board
-* Web Scarper
-* PowerJsMonkey 
+* PowerPage-Monkey 
 * Application Framework
 
 ## Senario

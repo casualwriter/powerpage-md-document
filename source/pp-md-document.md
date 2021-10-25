@@ -261,7 +261,6 @@ this is __underline__ sample
 **enhance syntax**  
 * ~~Strikethrough~~ sample
 * ~~delete~~ then ^^insert^^
-* mark {{text}} is supported
 
 **disable decoration**
 * disable \*\*bold\*\* by esc\  
@@ -281,7 +280,6 @@ this is __underline__ sample
 **enhance syntax**  
 * ~~Strikethrough~~ sample
 * ~~delete~~ then ^^insert^^
-* mark {{text}} is supported
 
 **disable decoration**
 * disable \*\*bold\*\* by esc\  
@@ -301,7 +299,6 @@ this is __underline__ sample
 **enhance syntax**  
 * ~~Strikethrough~~ sample
 * ~~delete~~ then ^^insert^^
-* mark {{text}} is supported
 
 **disable decoration**
 * disable \*\*bold\*\* by esc\  
