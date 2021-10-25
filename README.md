@@ -18,12 +18,20 @@ and serve the following purposes
 2. **Directly run from github repository via CDN**.  e.g. rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html)   
 3. run within [Powerpage](https://github.com/casualwriter/powerpage) with **Powerpage API enabled**.
 
+### How it works
+
+Actually, the program only has **one file** (i.e. [index.html](source/index.html)), in **pure javascript without any dependance**.
+
+it will do the following
+
+1. load markdown file by js function `loadMdFile(file,title)`
+2. parse it to html by js function `simpleMarkdown(mdtext)`  
+3. show in right-panel with TOC+scrollspy by js function `simpleTOC( srcDIV, toDiv, title )`
+
 
 ### User Guide
 
-Actually, the program only has one file. i.e. [index.html](index.html), in **pure javascript without dependance**.
-
-first, direct modify the index.html to link up the top-menu to your markdown files
+Please direct modify index.html to link up the top-menu to your markdown files
  
 Below is the default setup for [Powerpage Documentation](https://casualwriter.github.io/powerpage/).
 
