@@ -14,9 +14,9 @@ composed for github (e.g. README.md).
 Thinking that it will be greated to make use of these markdown files as system documentation, 
 and serve the following purposes
 
-1. Generage document from markdown for web hosting. i.e. github page: https://casualwriter.github.io/powerpage/   
-2. Directly run from github repository via CDN.  e.g. via rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html)   
-3. run within [Powerpage](https://github.com/casualwriter/powerpage) with API enabled.
+1. Generage document from markdown for **web hosting**. e.g. github page: https://casualwriter.github.io/powerpage/   
+2. **Directly run from github repository via CDN**.  e.g. rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html)   
+3. run within [Powerpage](https://github.com/casualwriter/powerpage) with **Powerpage API enabled**.
 
 
 ### User Guide
@@ -52,9 +52,9 @@ Below is the default setup for [Powerpage Documentation](https://casualwriter.gi
 
 Please setup the following items for your documentation site.
 
-* Start Flie  (i.e. <body onload="loadMdFile( location.href.split('?file=')[1]||`'README.md'`, '<b>Contents</b>' )"> )
-* Page Title  (ie. `<span id=title>{page-title}</span>`)
-* Menu Items  (i.e. `<button onclick="loadMdFile( '{markdown-file}', this.innerText )">{document-title}</button>)` )
+* Start Flie  (ie. ``<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">`` )
+* Page Title  (ie. ``<span id=title>{page-title}</span>``)
+* Menu Items  (ie. ``<button onclick="loadMdFile( '{markdown-file}', this.innerText )">{document-title}</button>)``)
 
 then copy [index.html](source/index.html) with markdown documents to web server. that's ALL!
 
