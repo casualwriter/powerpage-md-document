@@ -59,7 +59,16 @@ Powerpage is a single executable program. No installation is needed, just downlo
 * ``powerpage.js`` is the initial javascript lib for interface
 * ``*.dll`` is Powerbuilder run-time files
 
- **Applications**
+**Source code**
+
+Powerpage is developed by Powerbuilder 10.5, source code is powerpage.pbl (only one file)  
+
+* `powerpage.pbl` is powerbuilder source code 
+* `powerpage.pbt` is powerbuilder target file
+* exported source entries can be found under folder [src\*](https://github.com/casualwriter/powerpage/tree/main/source/src)
+* to compile the program, add `powerpage.pbt` to workspace, and compile by `p_powerpage` 
+
+**Applications**
 
 * ``pp-md-editor.html`` is pp-application of "Powerpage Markdown Editor"
 * ``pp-web-crawler.html`` is pp-application of "Powerpage Web Crawler"
@@ -148,21 +157,22 @@ Powerpage is released with some sample applications.
   
 ## Modification History
 
-* 2021/05/07, beta version, v0.41 
-* 2021/05/14, beta version, v0.43, with markdown editor [powerpage-md-editor](https://github.com/casualwriter/powerpage-md-editor)
-* 2021/05/25, beta version, v0.46, commandline for html printing
-* 2021/06/03, beta version, v0.48, generate PDF report (using wkhtmltopdf.exe)
-* 2021/06/16, beta version, v0.50, more command line options
-* 2021/07/02, beta version, v0.54, crawl web function, add [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler)
-* 2021/07/08, beta version, v0.55, refine powerpage, update [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler)
-* 2021/07/20, beta version, v0.56, add pb://spider command; update [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler)
-* 2021/10/05, beta version, v0.57, code document framework pp-document.html, update documents
+* 2021/05/07, v0.41 
+* 2021/05/14, v0.43, with markdown editor [powerpage-md-editor](https://github.com/casualwriter/powerpage-md-editor)
+* 2021/05/25, v0.46, commandline for html printing
+* 2021/06/03, v0.48, generate PDF report (using wkhtmltopdf.exe)
+* 2021/06/16, v0.50, more command line options
+* 2021/07/02, v0.54, crawl web function, add [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler)
+* 2021/07/08, v0.55, refine powerpage, update [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler)
+* 2021/07/20, v0.56, add pb://spider command; update [powerpage-web-crawler](https://github.com/casualwriter/powerpage-web-crawler)
+* 2021/10/05, v0.57, code document framework pp-document.html, update documents
 * 2021/10/06, code document framework (html version) at [doc/index.html](https://github.com/casualwriter/powerpage/blob/main/source/doc/index.html)
-* 2021/10/12, beta version, v0.58, update documents with [markdown parser](https://github.com/casualwriter/powerpage/blob/main/source/doc/index.html)
-* 2021/10/14, beta version, v0.60, align all version (powerpage-md-editor,powerpage-web-crawler) to v0.60
-* 2021/10/15, beta version, v0.61, support commandline option: /select={selector}
-* 2021/10/20, beta version, v0.62, minor fix of markdown parser; show [system document](https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html) directly from github  
-  
+* 2021/10/12, v0.58, update documents with [markdown parser](https://github.com/casualwriter/powerpage/blob/main/source/doc/index.html)
+* 2021/10/14, v0.60, align all version (powerpage-md-editor,powerpage-web-crawler) to v0.60
+* 2021/10/15, v0.61, support commandline option: /select={selector}
+* 2021/10/20, v0.62, minor fix of markdown parser; show [system document](https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html) directly from github  
+* 2021/11/02, v0.63, update pb source \src\*.*; remove local documents, host in [github-page](https://casualwriter.github.io/powerpage) now.
+ 
 
 ## To-Do List
 
@@ -172,7 +182,7 @@ Powerpage is released with some sample applications.
 * refine layout of powerpage-md-editor and powerpage-web-crawler 
 * api: app.registry( 'get|set|delete', key, values ) 
 * api: app.loadIniFile() => read ini file, return json.
-* api: app.datawindow( id, params ) => popup datawindow report defined in <div> 
+* api: app.datawindow( id, params ) => popup datawindow report in dw syntax but in html.  
 * app: "powerpage-db-report" - db reporting utility.  
 * app: "powerpage-kanban" - simple kanban utility for teamwork.  
 

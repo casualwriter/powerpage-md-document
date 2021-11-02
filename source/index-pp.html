@@ -42,7 +42,8 @@ td    { border:1px solid grey;  padding:6px; }
 <div id=header>
   <span id=title>Powerpage <small>(documentation)</small></span>
   <span id=menu style="float:right; padding:12px">
-    <button onclick="loadMdFile( 'README.md', this.innerText )">Home</button>
+    <button onclick="window.history.back();">GoBack</button>
+    <button onclick="loadMdFile( 'README.md', this.innerText )">README</button>
     <button onclick="loadMdFile( 'interface.md', this.innerText )">API</button>
     <button onclick="loadMdFile( 'development.md', this.innerText )">Development</button>
     <button onclick="loadMdFile( 'pp-md-document.md', this.innerText )">Document.md</button>
@@ -77,36 +78,35 @@ td    { border:1px solid grey;  padding:6px; }
 // below script will initialize variable/callback for pb.API() call, 
 // used if called within powerpage.exe ONLY! No need for HTML version!
 //====================================================================================
-if (pb) {  
-  var sql1 = "SELECT * from Products where SupplierID=20";
-  var sql2 = "SELECT * from Customers where City='London' ";
-  var sql3 = "UPDATE Products set UnitsOnOrder = UnitsOnOrder + 1 where SupplierID=20 ";
-  var keys = 'js=mycallback/run=notepad.exe/title=Untitled - Notepad/ms=500/test/ms=300/{bs}/ms=300/123/ms=500/456/~new line'
+var sql1 = "SELECT * from Products where SupplierID=20";
+var sql2 = "SELECT * from Customers where City='London' ";
+var sql3 = "UPDATE Products set UnitsOnOrder = UnitsOnOrder + 1 where SupplierID=20 ";
+var keys = 'run=notepad.exe/title=Untitled - Notepad/ms=500/test/ms=300/{bs}/ms=300/123/ms=500/456/~new line'
 
-  //=== onCallback will be called if no callback specified. set default callback for type=json/table/sql/file/dir
-  function onCallback(result, type, url) {
-     if (type=='db'||type=='sql'||type=='file'||type=='dir') {
-       alert( 'callback (default)\n\n type:' + type + '\n cmd: ' + url + '\n result: \n\n' + result )
-     }
-  }   
+//=== onCallback will be called if no callback specified. set default callback for type=json/table/sql/file/dir
+function onCallback(result, type, url) {
+   if (type=='db'||type=='sql'||type=='file'||type=='dir') {
+     alert( 'callback (default)\n\n type:' + type + '\n cmd: ' + url + '\n result: \n\n' + result )
+   }
+}   
 
-  //=== enable powerpage API call with document. ie. pb://..
-  function markupForPowerpage() {
-    text = document.getElementById('right-panel').innerHTML
-    // special handling for github (call chrome for github.com as not support IE11)
-    text = text.replace(/<a href="https:\/\/github/g,'<a href="pb://shell/file=chrome.exe,parm=https://github')
-    
-    // special handling for *.md
-    text = text.replace(/<a href="(.*?).md"/gim,'<a href="javascript:loadMdFile(\'$1.md\',\'$1\')"')
-    
-    // call pb.function for API
-    text = text.replace(/<code\>javascript:(.*?)<\/code\>/gm,'<code><a href="javascript:$1">javascript:$1</a></code>')
-    text = text.replace(/<code\>pb:\/\/(.*?)<\/code\>/gm,'<code><a href="pb://$1">pb://$1</a></code>')
-    text = text.replace(/<code\>ps:\/\/(.*?)<\/code\>/gm,'<code><a href="ps://$1">ps://$1</a></code>')
-    document.getElementById('right-panel').innerHTML = text
-   } 
-}
-//====================================================================================
+//=== enable powerpage API call with document. ie. pb://..
+function markupForPowerpage() {
+  var text = document.getElementById('right-panel').innerHTML
+
+  // special handling for github (call chrome for github.com as not support IE11)
+  text = text.replace(/<a href="https:\/\/github/g,'<a href="pb://shell/file=chrome.exe,parm=https://github')
+  
+  // special handling for *.md
+  text = text.replace(/<a href="(.*?).md"/gim,'<a href="javascript:loadMdFile(\'$1.md\',\'$1\')"')
+  
+  // call pb.function for API
+  text = text.replace(/<code\>javascript:(.*?)<\/code\>/gm,'<code><a style="color:#c33" href="javascript:$1">javascript:$1</a></code>')
+  text = text.replace(/<code\>pb:\/\/(.*?)<\/code\>/gm,'<code><a style="color:#c33" href="pb://$1">pb://$1</a></code>')
+  text = text.replace(/<code\>ps:\/\/(.*?)<\/code\>/gm,'<code><a style="color:#c33" href="ps://$1">ps://$1</a></code>')
+  document.getElementById('right-panel').innerHTML = text
+} 
+//==================== END of script for powerpage.exe =========================================
 
 
 //=== toggle HTML in right-panel. (this is a hidden function for developer)

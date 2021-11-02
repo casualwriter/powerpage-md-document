@@ -7,12 +7,10 @@ A simple document framework for using markdown as system documentation.
 
 ### Background
 
-Documentation is always a boring job for developer. When working on the document of 
-["Powerpage"](https://github.com/casualwriter/powerpage), there are some markdown files 
-composed for github (e.g. README.md).
-
-Thinking that it will be greated to make use of these markdown files as system documentation, 
-and serve the following purposes
+Documentation is always a boring job for developer. 
+When working on the document of ["Powerpage"](https://github.com/casualwriter/powerpage), 
+there are some markdown files composed for github (e.g. README.md).  
+I would like to make use of these markdown files for the following purposes
 
 1. Generage document from markdown for **web hosting**. e.g. github page: https://casualwriter.github.io/powerpage/   
 2. **Directly run from github repository via CDN**.  e.g. rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html)   

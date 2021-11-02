@@ -1,105 +1,72 @@
 ## Document by Markdown
 
-This program, ``pp-document.html``, is a powerpage-application to show documents from markdown files.
+A simple document framework for using markdown as system documentation. 
 
-* read markdown file (via ajax)
-* parse markdown by [basic markdown syntax](#markdown-syntax)
-* auto table-of-content with scrollspy
-* enable [API call](?file=interface.md "new") of powerpage 
+<img alt="screen preview" src="pp-md-document.gif" style="width:85%; padding:30px">
 
-It may work as document framework serve the following purpose
 
-1. show markdown file as documentation
-2. make powerpage API call from markdown (e.g. [edit src](pb://run/notepad.exe pp-document.html))
-3. write simple application by markdown.
-   
-A web version ([doc/index.html](https://github.com/casualwriter/powerpage-document)) is also
-available to show [powerpage documentation](https://pingshan-tech.com/powerpage/doc/ "new") to web. 
+### Background
 
-  ![Powerpage Documents](pp-md-document.gif "width=80%")
+Documentation is always a boring job for developer. 
+When working on the document of ["Powerpage"](https://github.com/casualwriter/powerpage), 
+there are some markdown files composed for github (e.g. README.md).  
+I would like to make use of these markdown files for the following purposes
 
-### Menu of Markdown Documents
+1. Generage document from markdown for **web hosting**. e.g. github page: https://casualwriter.github.io/powerpage/   
+2. **Directly run from github repository via CDN**.  e.g. rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html)   
+3. run within [Powerpage](https://github.com/casualwriter/powerpage) with **Powerpage API enabled**.
 
-Top menu shows the list of markdown files. Please define the menu item for each markdown file by below html code.
+### How it works
 
-~~~ top menu
+Actually, the program only has **one file** (i.e. [index.html](source/index.html)), in **pure javascript without any dependance**.
+
+it will do the following
+
+1. load markdown file by js function `loadMdFile(file,title)`
+2. parse it to html by js function `simpleMarkdown(mdtext)`  
+3. show in right-panel with TOC+scrollspy by js function `simpleTOC( srcDIV, toDiv, title )`
+
+
+### Usage Guide
+
+Please direct modify index.html to link up the top-menu to your markdown files
+ 
+Below is the default setup for [Powerpage Documentation](https://casualwriter.github.io/powerpage/).
+
+```
+<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">
 <div id=header>
-  <span id=title onclick="location='powerpage.html'">Powerpage <small>(documentation)</small></span>
+  <span id=title>Powerpage <small>(documentation)</small></span>
   <span id=menu style="float:right; padding:12px">
-    <button onclick="loadMdFile('doc/README.md',this.innerText)">Home</button>
-    <button onclick="loadMdFile('doc/interface.md',this.innerText)">API</button>
-    <button onclick="loadMdFile('doc/development.md',this.innerText)">Development</button>
-    <button onclick="loadMdFile('doc/pp-document.md')">Document.md</button>
-    <button onclick="loadMdFile('doc/pp-markdown.md')" disabled>Markdown-Editor</button>
-    <button onclick="loadMdFile('doc/pp-web-crawler.md')" disabled>Web-Crawler</button>
-    <button onclick="loadMdFile('doc/pp-db-report.md')" disabled>DB-Reports</button> | 
-    <button onclick="toggleHTML()">HTML</button> 
-    <button onclick="pb.print('preview')">Print</button>
-    <button onclick="pb.window('w_about')">About</button>
+    <button onclick="loadMdFile( 'README.md', this.innerText )">Home</button>
+    <button onclick="loadMdFile( 'interface.md', this.innerText )">API</button>
+    <button onclick="loadMdFile( 'development.md', this.innerText )">Development</button>
+    <button onclick="loadMdFile( 'pp-document.md', this.innerText )">Document.md</button>
+    <button onclick="loadMdFile( 'pp-md-editor', this.innerText )" disabled>Markdown-Editor</button>
+    <button onclick="loadMdFile( 'pp-web-crawler.md', this.innerText )" disabled>Web-Crawler</button>
+    <button onclick="loadMdFile( 'pp-db-report.md', this.innerText )" disabled>DB-Reports</button> 
+    <button onclick="window.print()">Print</button> 
+    <button style="display:none" onclick="toggleHTML()" accesskey=s>ShowHTML</button> 
   </span>
 </div>
-~~~
+<div id=content>
+  <div id="left-panel"></div>
+  <div id="right-panel"></div>
+</div>
+</body>
+```
 
+Please setup the following items for your documentation site.
+
+* Start Flie  (ie. ``<body onload="loadMdFile( location.href.split('?file=')[1]||'README.md', '<b>Contents</b>' )">`` )
+* Page Title  (ie. ``<span id=title>{page-title}</span>``)
+* Menu Items  (ie. ``<button onclick="loadMdFile( '{markdown-file}', this.innerText )">{document-title}</button>)``)
+
+then copy [index.html](source/index.html) with markdown documents to web server. that's ALL!
+
+ps: a hidden function for developer. Press [Alt-S] will toggles page between normal and raw HTML.
  
-### Simple TOC
 
-simpleTOC() retrieve all "H2,H3,H4" elements, and generate "table of content" to left-panel.
-
-ps: for Powerpage documents, only retrieve "H2,H3"
-
-~~~ simple TOC
-//=== simpleTOC: show Table of Content (updated on 2021/10/09)
-function simpleTOC( title, srcDiv, toDiv ) {
-
-  // retrieve he,h3[,h4,h5] DOM elements
-  var toc = document.getElementById(srcDiv||'right-panel').querySelectorAll('h2,h3')
-  var html = '<h4> ' + (title||'Content') + '</h4><ul id="toc">';
-  
-  for (var i=0; i<toc.length; i++ ) {
-  
-    // assign id if not defined 
-    if (!toc[i].id) toc[i].id = "toc-item-" + i;
-    
-    // generate indented list by h2,h3,h4  
-    if (toc[i].nodeName === "H2" && toc[i].id.substr(0,6)!=="no-toc") {
-      html += '<li style="background:#f6f6f6"><a href="#' + toc[i].id + '">' + toc[i].innerText + '</a></li>';
-    } else if (toc[i].nodeName === "H3" && toc[i].id.substr(0,6)!=="no-toc") {
-      html += '<li style="margin-left:12px"><a href="#' + toc[i].id + '">' + toc[i].innerText + '</a></li>';
-    } else if (toc[i].nodeName === "H4" && toc[i].id.substr(0,6)!=="no-toc") {
-      html += '<li style="margin-left:24px"><a href="#' + toc[i].id + '">' + toc[i].innerText + '</a></li>';
-    }
-    
-  }
-  
-  document.getElementById(toDiv||'left-panel').innerHTML = html   
-}
-~~~
-  
-  
-### Simple Scroll-Spy
-
-listen to onscroll event, check the position of all TOC items, and highlight these TOC items shown in viewport.
-
-~~~ scrollspy
-//=== scrollspy feature  (updated on 2021/10/09)
-document.getElementById('right-panel').onscroll = function () {
-
-  // get links and get viewport position   
-  var list = document.getElementById('left-panel').querySelectorAll('a')
-  var divScroll = document.getElementById('right-panel').scrollTop - 10
-  var divHeight = document.getElementById('right-panel').offsetHeight
-  
-  // loop for each header element, highlight if within viewport
-  for (var i=0; i<list.length; i++) {
-    var div = document.getElementById( list[i].href.split('#')[1] )
-    var pos = (div? div.offsetTop - divScroll : 0 )  // in case of not found sometimes.
-    list[i].style['font-weight'] = ( pos>0 && pos<divHeight ? 600 : 400 )
-  }
-  
-}
-~~~
-
-  
 ### Simple Markdown
 
 Considered to call js lib for markdown parser. However, some may too heavy, and some do not support IE11.
@@ -677,3 +644,4 @@ however, be aware compatibility issue if document will be parsed by other parser
 * 2021/10/11, v0.63, rewrite code-block, highlight remarks and keywords 
 * 2021/10/12, v0.64, support table syntax 
 * 2021/10/20, v0.66, minor fixes. support nested unordered list. 
+* 2021/11/02, v0.67, remove local document, hosted on github-page now. 
