@@ -17,7 +17,9 @@
 
 ### Source Code
 
-It is single html/js program ([pp-md-editor.html](source/pp-md-editor.html)) within 100 lines. 
+It is single html/js program ([pp-md-editor.html](source/pp-md-editor.html)) within 100 lines.
+
+for the source code of **Powerpage**, please visit https://github.com/casualwriter/powerpage/tree/main/source/src
   
   
 ## Modification History
@@ -29,13 +31,3 @@ It is single html/js program ([pp-md-editor.html](source/pp-md-editor.html)) wit
 * 2021/07/09, v0.62, minor fix, with powerpage v0.55, and power-web-crawler v0.40
 * 2021/07/20, v0.62, update source folder, align with powerpage v0.56, and power-web-crawler v0.56
   
-
-## License
-
-MIT
-
-
-
-
-
-

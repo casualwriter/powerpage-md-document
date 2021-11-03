@@ -23,7 +23,7 @@ Actually, the program only has **one file** (i.e. [index.html](source/index.html
 it will do the following
 
 1. load markdown file by js function `loadMdFile(file,title)`
-2. parse it to html by js function `simpleMarkdown(mdtext)`  
+2. parse it into html by js function `simpleMarkdown(mdtext)`  
 3. show in right-panel with TOC+scrollspy by js function `simpleTOC( srcDIV, toDiv, title )`
 
 

@@ -29,15 +29,18 @@ Program will
 * No installation is needed, Just download and run ``powerpage.exe``.
 * The package is same as [Powerpage](https://github.com/casualwriter/powerpage), only ``powerpage.ini`` is revised.
 
-  
-### Technical Info.
 
-* Source Code: it is a single html/js program ([pp-web-crawler.html](source/pp-web-crawler.html)) about 300 lines.
-* May edit style sheet [pp-web-crawler.css](source/pp-web-crawler.css) to markup scrawled content in your preference.
+### Source Code & files
+
+It is single html/js application ([pp-web-crawler.html](source/pp-web-crawler.html)) in about 350 lines.
+
+* style sheet [pp-web-crawler.css](source/pp-web-crawler.css) is used to markup crawled content in your preference.
 * ``pp-sample.mdb`` is MS Access DB to save site setting and links.
 
-
-## User Guide
+for the source code of **Powerpage**, please visit https://github.com/casualwriter/powerpage/tree/main/source/src
+  
+  
+## Usage Guide
 
 
 ### Test Crawling
@@ -78,7 +81,3 @@ If everything is tested fine, may click [Save All to File] to crawl all pages to
 * 2021/07/11, v0.50, work with database, work with local files, and misc enhancement
 * 2021/07/15, v0.55, bug fixed, and misc enhancement.
 * 2021/07/19, v0.56, minor fixed.
-  
-## License
-
-MIT
