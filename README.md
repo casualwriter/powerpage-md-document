@@ -13,7 +13,7 @@ there are some markdown files composed for github (e.g. README.md).
 I would like to make use of these markdown files for the following purposes
 
 1. Generage document from markdown for **web hosting**. e.g. github page: https://casualwriter.github.io/powerpage/   
-2. **Directly run from github repository via CDN**.  e.g. rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage/main/source/doc/index.html)   
+2. **Directly run from github repository via CDN**.  e.g. rawgit.org: https://ghcdn.rawgit.org/casualwriter/powerpage-md-document/main/source/doc/index.html)   
 3. run within [Powerpage](https://github.com/casualwriter/powerpage) with **Powerpage API enabled**.
 
 ### How it works
