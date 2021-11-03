@@ -11,7 +11,7 @@ For example,
 * run a program, call ``javascript:pb.run()``
 * run sql to get data. call ``javascript:pb.db.query(sql,callback)``
 * execute sql to update db,call ``javascript:pb.db.execute(sql,callback)``
-
+   
 -------------------------------------------------------------------
 ### Start page
 
@@ -20,7 +20,7 @@ Start page can be defined by commandline, or ini. Powerpage load the start html 
 1. check commandline first. ``powerpage.exe your-start-page.html``
 2. check powerpage.ini if no commandline option is found
 3. if not defined in ini file, by default, powerpage load index.html (or powerpage.html) if found. 
-
+   
 -------------------------------------------------------------------
 ### Command Line
 
@@ -68,7 +68,7 @@ powerpage.exe /ini={ini-file} /url={start-url}  /script={script-file} /fullscree
 * ``powerpage /url=https://github.com/casualwriter/powerpage /save=README.html /select=.markdown-body /silent`` to save README from github (silent mode)
 * ``powerpage /url=https://github.com/casualwriter/powerpage /pdf=README.pdf /select=.markdown-body /silent`` to save in PDF format
 
-  
+     
 -------------------------------------------------------------------
 ## INI Setting
 
@@ -232,6 +232,7 @@ simply open an editor and save the following code to `index.html`, and run power
 
 -------------------------------------------------------------------
 ### Security Consideration
+
 
 
 ## Deployment
