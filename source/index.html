@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <title>PowerPage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 html { box-sizing:border-box } *,*:before, *:after {box-sizing:inherit}
 body { font-family:Verdana,sans-serif; font-size:14px; line-height:1.5; margin:0; }
@@ -33,6 +34,17 @@ td    { border:1px solid grey;  padding:6px; }
 @media print{
   #header, #left-panel { display:none!important }
   #right-panel { position:relative; width:100%; left:0px; top:0px; border:none; height:auto; overflow:hidden }
+}
+
+@media screen and (min-width: 600px) and (max-width: 900px){ 
+  #header { background-color:#695874; color:white; width:100%; height:80px; }
+  #left-panel 	{ display:none; position:absolute; left:0px; width:100%; top:80px; border:1px solid grey; overflow:auto; padding:4px 8px }
+  #right-panel 	{ position:absolute; left:0px; width:100%;; top:80px; border:1px solid grey; overflow:auto; padding:4px 8px }
+}
+@media screen and (max-width: 600px) {
+  #header { background-color:#695874; color:white; width:100%; height:100px; }
+  #left-panel 	{ display:none; position:absolute; left:0px; width:100%; top:100px; border:1px solid grey; overflow:auto; padding:4px 8px }
+  #right-panel 	{ position:absolute; left:0px; width:100%;; top:100px; border:1px solid grey; overflow:auto; padding:4px 8px }
 }
 </style>
 
@@ -69,8 +81,35 @@ td    { border:1px solid grey;  padding:6px; }
 //   RawGit:      https://ghcdn.rawgit.org/casualwriter/powerpage-md-document/main/source/index.html
 //   gitHack:     https://raw.githack.com/casualwriter/powerpage-md-document/main/source/index.html
 //
-// Last updated on 2021/10/21, v0.66, minor fix on markdown parser, TOC
+// Last updated on 2021/11/16, v0.67, support mobile. responsive css with touch support.
 //######################################################################################
+
+// touch event for mobile (swipe to show/hide right-panel)
+if (window.innerWidth<900) {
+
+  function toggleTOC(show) {
+    var disp = document.getElementById('left-panel').style.display
+    document.getElementById('left-panel').style.display = show||(disp=='none')? 'block' : 'none'
+    document.getElementById('right-panel').style.display = show||(disp=='none')? 'none' : 'block' 
+  }
+  
+  window.addEventListener( 'touchstart', function(e) { document.touch=e.changedTouches[0] } )
+  
+  window.addEventListener( 'touchend', function(e) { 
+  	 var distX = e.changedTouches[0].clientX - document.touch.clientX
+  	 var distY = e.changedTouches[0].clientY - document.touch.clientY
+  	 if ( Math.abs(distY) < 15 && distX > 30 ) {
+  			e.preventDefault(); 
+        toggleTOC(true)
+  	 } else if ( Math.abs(distY) < 15 && distX < -20 ) {
+  			e.preventDefault(); 
+        toggleTOC(false) 
+  	 }
+    } );
+    
+    document.getElementById('left-panel').onclick = function() {toggleTOC(false)}
+    document.getElementById('title').onclick = function() {toggleTOC()} 
+}
 
 //=== toggle HTML in right-panel. (this is a hidden function for developer)
 function toggleHTML() {
@@ -89,6 +128,7 @@ function loadMdFile( fname, title ) {
   
   xmlhttp.onload = function (e) {
     document.getElementById('right-panel').innerHTML =  simpleMarkdown(this.responseText) + '<br>'
+    document.getElementById('right-panel').scrollTop = 0
     simpleTOC( 'right-panel', 'left-panel', title||fname, 'color:red' )
     if (fname.indexOf('#')>0) location.href = fname.substr( fname.indexOf('#') ) 
   }
@@ -102,7 +142,7 @@ function simpleTOC( srcDiv, tocDiv, title, scrollSpy  ) {
 
   // retrieve he,h3[,h4,h5] DOM elements
   var toc = document.getElementById(srcDiv).querySelectorAll('h2,h3')
-  var html = '<h4> ' + (title||'Content') + '</h4><ul id="toc">';
+  var html = (title? '<h4> '+title+' </h4>' : '') + '<ul id="toc">';
   
   for (var i=0; i<toc.length; i++ ) {
   

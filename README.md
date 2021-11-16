@@ -25,7 +25,7 @@ it will do the following
 1. load markdown file by js function `loadMdFile(file,title)`
 2. parse it into html by js function `simpleMarkdown(mdtext)`  
 3. show in right-panel with TOC+scrollspy by js function `simpleTOC( srcDIV, toDiv, title )`
-
+4. for mobile, show document only. and show TOC by touch-right event
 
 ### Usage Guide
 
@@ -81,4 +81,5 @@ Document of **supported markdown syntax** can be found at https://casualwriter.g
 * 2021/10/08, v0.60, add scrollspy feature.
 * 2021/10/12, v0.64, refine of simple markdown parser
 * 2021/10/21, v0.67, minor fix on md parser and TOC 
+* 2021/11/16, v0.68, mobile support for responsive css and touch event 
 
